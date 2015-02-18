@@ -4,7 +4,7 @@ function route(handle, pathname, response) {
 		handle[pathname](response);
 	} else {
 		response.writeHead( 404, { "Content-Type" : "text/plain" });
-		response.write( "404 Not found" );
+		response.write( "404 Not found :(" );
 		response.end();
 	}
 }
