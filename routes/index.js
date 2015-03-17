@@ -6,12 +6,24 @@ var fs = require('fs');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	fs.readFile('data/index.md', 'utf8', function(err, data)
-	{
-  		var mdcontent = marked(data);
-  		console.log(req);
-  		res.render('index', { title: 'Smofte!', content: mdcontent });
-	});
+	
+	loadpage(res, 'data/index.md');
 });
+
+router.get('/*', function(req, res, next) {
+	path = "data" + req.path + ".md";
+	loadpage(res, path);
+});
+
+function loadpage(res, path)
+{
+	fs.readFile(path, 'utf8', function(err, data)
+	{
+		console.log("Loading " + path);
+  		var mdcontent = marked(data);
+  		// var title = "Seite ist " + req.path;
+  		res.render('index', { title: "smofte", content: mdcontent });
+	});
+}
 
 module.exports = router;
