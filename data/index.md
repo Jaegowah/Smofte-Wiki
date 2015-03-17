@@ -3,6 +3,8 @@
 An h1 header
 ============
 
+Meine Hobbies sind Angeln und [Wurst anlegen](wurst).
+
 Paragraphs are separated by a blank line.
 
 2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists
@@ -148,7 +150,6 @@ Here's a "line block":
 
 and images can be specified like so:
 
-![example image](example-image.jpg "An exemplary image")
 
 Inline math equations go in like so: $\omega = d\phi / dt$. Display
 math should get its own line and be put in in double-dollarsigns:
