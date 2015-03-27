@@ -1,8 +1,13 @@
 extends layout
 
 block content
-  h1 Smofte Development Wiki
-    br
-    small Powered by Smofte(tm)
+  .page-header
+    h1 Smofte Development Wiki
+      br
+      small Powered by Smofte(tm)
+  a.btn.btn-default(href="/#{pagename}/edit") Bearbeiten
   hr
+  if flash != ""
+    .alert.alert-success #{flash}
+  br
   p !{content}

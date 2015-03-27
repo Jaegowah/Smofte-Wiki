@@ -1,8 +1,19 @@
-body {
+#smofte body 
+{
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #eee;
 }
 
-a {
+a 
+{
   color: #00B7FF;
 }
+
+.container
+{
+ 	background-color: #fff;
+ 	border-top: 4px solid #444;
+ 	border-radius: 1px;
+}
+
