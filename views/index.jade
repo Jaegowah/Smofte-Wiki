@@ -1,13 +1,12 @@
 extends layout
 
+mixin toolbar
+  nav
+    a.btn.btn-default(href="/#{pagename}/edit") Bearbeiten
+
 block content
-  .page-header
-    h1 Smofte Development Wiki
-      br
-      small Powered by Smofte(tm)
-  a.btn.btn-default(href="/#{pagename}/edit") Bearbeiten
-  hr
-  if flash != ""
+  if flash != null
     .alert.alert-success #{flash}
-  br
+  +toolbar
   p !{content}
+  +toolbar
