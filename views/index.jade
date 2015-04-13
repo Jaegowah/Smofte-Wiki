@@ -8,5 +8,6 @@ block content
   if flash != null
     .alert.alert-success #{flash}
   +toolbar
-  p !{content}
+  h1 !{page.title}
+  p !{page.current().content()}
   +toolbar

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var marked = require('marked');
 var fs = require('fs');
+var Page = require('../models/page.js');
 
 var pagepath = "data/";
 
@@ -52,7 +53,25 @@ router.get('/', function(req, res, next) {
 router.get('/:page', function(req, res, next) {
 
 
-	loadpage(res, req.params.page, next);
+	var pagename = req.params.page;
+	//loadpage(res, req.params.page, next);
+	if (! /^[a-zA-Z0-9-_]+$/.test(pagename)) 
+	{
+    	// not a valid pagename
+    	console.log("not a page");
+    	return next();
+	}
+	else
+	{
+		console.log("loading page via object...");
+		page = new Page(req.params.page);
+
+		page.load(function(p) {
+			console.log("can't touch :" + JSON.stringify(p));
+			res.render('index', { pagename: pagename, page: p, flash: null});
+		});
+	}
+
 
 });
 
