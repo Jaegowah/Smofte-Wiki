@@ -3,15 +3,25 @@ html#smofte
   head
     title Smofte.	
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='icon', href='favicon.png', type='image/png').
+    link(href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700,700italic,400italic' rel='stylesheet' type='text/css')
   body
     div.container
       div.row
         header
-          div.col-sm-9
-             h1 Smofte.
           div.col-sm-3
               p 
-        article.col-sm-12
+          div.col-sm-9
+             h1 Smofte.
+      div.row
+        aside.col-sm-3.sidebar
+          ul
+            li
+              a(href='/index') Startseite
+            li
+              a(href='/todo') To Do Liste
+            li
+              a(href='/weekly') Protokolle
+        article.col-sm-9.content
           block content

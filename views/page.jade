@@ -8,6 +8,10 @@ block content
   if flash != null
     .alert.alert-success #{flash}
   +toolbar
-  h1 !{page.title}
-  p !{page.current().content()}
+  p
+    small Version 
+      i !{page.version} 
+      i !{page.user} 
+  p !{page.content}
+  small.categories Kategorien: !{p.categories}
   +toolbar

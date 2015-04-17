@@ -4,12 +4,12 @@ block content
   h1 Edit Page 
     em #{pagename}
 
-  form(method='post', action="/#{pagename}")
-    textarea(name="md", rows='20', cols='100') #{rawmd}
+  br
+  form.edit(method='post', action="/#{pagename}")
+    textarea(name="md", rows='20') #{p.raw}
     br
-    hr
+    br
     input.btn.btn-primary(type="submit", value="Speichern")
     a.btn.btn-default(href="/#{pagename}") Abbrechen
     br
     br
-

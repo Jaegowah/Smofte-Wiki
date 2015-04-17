@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var marked = require('marked');
 var fs = require('fs');
-var Page = require('../models/page.js');
+var PageManager = require('../models/page.js');
 
 var pagepath = "data/";
 
@@ -14,40 +14,36 @@ function path_to_page(pagename)
 // alrighty someone tries to save their edits!
 router.post('/:page', function(req, res, next)
 {
-	var flash=""
-	console.log(req.headers);
+	var flash="";
+
 	if (req.hasOwnProperty("body"))
 	{
 		console.log("attempting to save...");
-		newcontent = req.body.md
-		path = path_to_page(req.params.page);
-		fs.writeFile(path, newcontent, function(err) {
-		    if(err) {
-		        return console.log(err);
-				flash = "Something went wrong saving: " + err; 
-		    }
-		    else
-		    {
-		    	console.log("The file was saved to "+path+"!");
-		    	flash = "Page save successfully.";
-		    }
-			
-			loadpage(res, req.params.page, next, flash);
+		pagename = req.params.page;
+		newcontent = req.body.md;
 
-		}); 
+		pm = new PageManager();
+		pm.saveNewPageRevision(pagename, newcontent, function(page)
+		{
+			res.render('page', { pagename: pagename, page: p, flash: "Page saved successfully!"});
+		});
 	}
 	else
 	{
 		flash = "wtf";
-		loadpage(res, req.params.page, next, flash);
+		console.log("Error saving...");
 	}
 });
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	
-	loadpage(res, 'index', next);
+	pm = new PageManager();
+	var pagename = "index";
+	pm.getPage(pagename, function(p) {
+		res.render('page', { pagename: pagename, page: p, flash: null});
+	});
+
 });
 
 router.get('/:page', function(req, res, next) {
@@ -64,12 +60,44 @@ router.get('/:page', function(req, res, next) {
 	else
 	{
 		console.log("loading page via object...");
-		page = new Page(req.params.page);
+		pm = new PageManager();
 
-		page.load(function(p) {
-			console.log("can't touch :" + JSON.stringify(p));
-			res.render('index', { pagename: pagename, page: p, flash: null});
+		pm.getPage(pagename, 
+		// call back if page successfully retrieved
+		function(p) 
+		{
+			res.render('page', { pagename: pagename, page: p, flash: null});
+		},
+		// callback if page does not exist
+		function()
+		{
+			res.render('new', { pagename: pagename });
 		});
+	}
+
+
+});
+
+router.get('/:page/v/:version', function(req, res, next) {
+
+
+	var pagename = req.params.page;
+	var version = req.params.version;
+	//loadpage(res, req.params.page, next);
+	if (! /^[a-zA-Z0-9-_]+$/.test(pagename)) 
+	{
+    	// not a valid pagename
+    	console.log("not a page");
+    	return next();
+	}
+	else
+	{
+		console.log("loading page via object...");
+		pm = new PageManager();
+
+		pm.load(pagename, function(p) {
+			res.render('page', { pagename: pagename, page: p, flash: null});
+		}, version);
 	}
 
 
@@ -77,59 +105,38 @@ router.get('/:page', function(req, res, next) {
 
 router.get('/:page/edit', function(req, res, next)
 {
-	console.log("Loading for Edit: " + path);
-	var path = path_to_page(req.params.page);
-	fs.readFile(path, 'utf8', function(err, data)
-	{
-		if (err)
-		{
-			// page doesn't exist, doesn't matter had sex 
-			next(req, res, next);
-			var mdcontent = ""
-		}
-		else
-		{
-  			var mdcontent = marked(data);
-		}
 
-  		// var title = "Seite ist " + req.path;
-  		res.render('edit', { pagename: req.params.page, rawmd: data });
-	});
-});
-
-
-
-function loadpage(res, pagename, next, flash)
-{
-	var path = path_to_page(pagename);
-
+	var pagename = req.params.page;
+	//loadpage(res, req.params.page, next);
 	if (! /^[a-zA-Z0-9-_]+$/.test(pagename)) 
 	{
     	// not a valid pagename
     	console.log("not a page");
     	return next();
 	}
-
-	fs.readFile(path, 'utf8', function(err, data)
+	else
 	{
+		pm = new PageManager();
+		pm.getPage(pagename,
 
-
-		console.log("Loading " + path);
-
-		if (err)
+			// callback for successful retrieval
+			function(p)
 			{
-				// so the page is not existing
-				// but it is a valid page name, we've checked that
-				// so let's create a new page
-				res.render('new', {pagename: pagename});
-			}
-		else
-		{
-			var mdcontent = marked(data);
-	  		// var title = "Seite ist " + req.path;
-	  		res.render('index', { pagename: pagename, content: mdcontent, flash: flash});
-		}
-	});
-}
+
+				res.render('edit', { pagename: pagename, page: p, flash: null});
+			},
+
+			// callback if page does not exist
+			function()
+			{
+				res.render('edit', { pagename: pagename });
+			});
+	}
+});
+
+// function renderPage(pagename, page, flash)
+// {
+
+// }
 
 module.exports = router;

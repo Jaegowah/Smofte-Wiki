@@ -1,8 +1,37 @@
 #smofte body 
 {
   padding: 1em;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 16px "Noto Sans", Helvetica, Arial, sans-serif;
+  line-height: 1.5em;
   background-color: #eee;
+}
+
+.content h1
+{
+	font-weight: bold;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 0.2em;
+}
+
+table
+{
+	margin-bottom: 1em;
+}
+
+#smofte td
+{
+	padding-right: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+#smofte small
+{
+	color: #bbb;
+}
+
+li
+{
+	margin-bottom: 0.2em;
 }
 
 a 
@@ -20,11 +49,37 @@ nav
 	padding: 1em 0;
 }
 
-article
+article.content
 {
  	background-color: #fff;
- 	border: 1px solid #dedede;
+ 	/*border: 1px solid #dedede;*/
  	border-top: 5px solid #444;
- 	border-radius: 4px;
+ 	padding-left: 3em;
+ 	padding-right: 3em;
 }
 
+.sidebar
+{
+	padding-top: 2em;
+}
+
+.sidebar a
+{
+	text-decoration: none;
+	color: #aaa;
+}
+
+.sidebar li
+{
+	list-style-type: none;
+}
+
+.edit textarea
+{
+	width: 100%;
+}
+
+a.btn
+{
+	margin-right: 1em;
+}
