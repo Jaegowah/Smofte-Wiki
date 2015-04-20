@@ -80,6 +80,38 @@ router.get('/:page', function(req, res, next) {
 
 });
 
+router.get('/:page/v', function(req, res, next) {
+
+
+	var pagename = req.params.page;
+	//loadpage(res, req.params.page, next);
+	if (! /^[a-zA-Z0-9-_]+$/.test(pagename)) 
+	{
+    	// not a valid pagename
+    	console.log("not a page");
+    	return next();
+	}
+	else
+	{
+		console.log("loading page via object...");
+		pm = new PageManager();
+
+		pm.getPage(pagename, 
+		// call back if page successfully retrieved
+		function(p) 
+		{
+			res.render('changelog', { pagename: pagename, page: p, flash: null});
+		},
+		// callback if page does not exist
+		function()
+		{
+			res.render('new', { pagename: pagename });
+		});
+	}
+
+
+});
+
 router.get('/:page/v/:version', function(req, res, next) {
 
 
@@ -97,7 +129,7 @@ router.get('/:page/v/:version', function(req, res, next) {
 		console.log("loading page via object...");
 		pm = new PageManager();
 
-		pm.load(pagename, function(p) {
+		pm.getPage(pagename, function(p) {
 			res.render('page', { pagename: pagename, page: p, flash: null});
 		}, version);
 	}

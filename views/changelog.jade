@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1 Versionen von Seite 
+    em #{pagename}
+
+  table.table.table-striped
+    thead
+      th Nr.
+      th User
+      th Beschreibung
+      th Link
+    each v in p.revisions
+      tr
+        td !{v.timestamp}
+        td !{v.user}
+        td !{v.msg}
+        td 
+          a(href="/#{pagename}/v/#{v.timestamp}") Ansehen
+
+  br

@@ -26,7 +26,7 @@ var PageManager = function()
 				p.categories = lo.categories;
 				p.revisions = lo.revisions;
 
-				console.log(JSON.stringify(p));
+				//console.log(JSON.stringify(p));
 				//callback.bind(this);
 
 				// if no specific revision is asked for, use the latest one
@@ -44,10 +44,12 @@ var PageManager = function()
 						if (p.revisions[i].timestamp == rvnr)
 						{
 							rev = p.revisions[i];
+							console.log("Found Revision " + rev.timestamp);
 						}
 					}
 					if (rev == null)
 					{
+						console.log("Couldn't find specified revision...");
 						rev = p.newestRevision();
 					}
 				}
