@@ -5,13 +5,16 @@ mixin toolbar
     a.btn.btn-default(href="/#{pagename}/edit") Bearbeiten
 
 block content
+  +toolbar
   if flash != null
     .alert.alert-success #{flash}
-  +toolbar
   p
     small Version 
       i !{page.version} 
+      | von 
       i !{page.user} 
+      |: 
+      i !{page.msg}
   p !{page.content}
   small.categories Kategorien: !{p.categories}
   +toolbar
