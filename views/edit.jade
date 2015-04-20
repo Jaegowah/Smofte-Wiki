@@ -5,11 +5,23 @@ block content
     em #{pagename}
 
   br
-  form.edit(method='post', action="/#{pagename}")
-    textarea(name="md", rows='20') #{p.raw}
+  form.edit.form-horizontal(method='post', action="/#{pagename}")
+    textarea.form-control(name="md", rows='20') #{p.raw}
     br
+    .form-group.row
+      .col-sm-3
+        label.control-label(for="username") Username
+      .col-sm-9
+        input.form-control(name="username")
+    .form-group.row
+      .col-sm-3
+        label.control-label(for="commitmsg") Beschreibung
+      .col-sm-9
+        input.form-control(name="commitmsg")
+
+
     br
     input.btn.btn-primary(type="submit", value="Speichern")
-    a.btn.btn-default(href="/#{pagename}") Abbrechen
+    a.btn.btn-link(href="/#{pagename}") Abbrechen
     br
     br
