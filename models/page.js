@@ -62,7 +62,7 @@ var PageManager = function()
 		});
 	}
 
-	this.saveNewPageRevision = function(pagename, newcontent, callback)
+	this.saveNewPageRevision = function(pagename, newcontent, user, msg, callback)
 	{
 		var pm = this;
 
@@ -74,7 +74,6 @@ var PageManager = function()
 			if (err)
 			{
 				// page doesn't exist yet
-
 				console.log("Creating new Metadata for page " + pagename);
 				if(!fs.existsSync(p.path()))
 				{
@@ -91,20 +90,23 @@ var PageManager = function()
 
 			// create new revision and add to temporary page object
 			newRev = new Revision;
-			user = "anon"; //todo
+			//user = "anon"; //todo
 			newRev.user = user;
-			p.user = user;
+			newRev.msg = msg;
 			var now = Date.now();
 			newRev.timestamp = now;
-			p.version = now;
 			console.log("New Revision: " + JSON.stringify(newRev));
 			p.revisions.push(newRev);
-			p.content = marked(newcontent);
 
 			// asynchronically save stuff while already rendering
 			// wow, such node js! much parallel
-			pm.saveVersion(pagename, now, newcontent);
 			pm.saveMeta(pagename, p);
+			pm.saveVersion(pagename, now, newcontent);
+
+			p.version = now;
+			p.msg = msg;
+			p.content = marked(newcontent);
+			p.user = user;
 
 			callback(p);
 		});
@@ -228,10 +230,11 @@ var Page = function(name)
 
 }
 
-var Revision = function(timestamp, user_id)
+var Revision = function(timestamp, user_id, msg)
 {
 	this.timestamp = timestamp;
 	this.user_id = user_id;
+	this.msg = msg;
 }
 
 // test script

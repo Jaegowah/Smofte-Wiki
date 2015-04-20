@@ -21,9 +21,11 @@ router.post('/:page', function(req, res, next)
 		console.log("attempting to save...");
 		pagename = req.params.page;
 		newcontent = req.body.md;
+		user = req.body.username;
+		msg = req.body.commitmsg;
 
 		pm = new PageManager();
-		pm.saveNewPageRevision(pagename, newcontent, function(page)
+		pm.saveNewPageRevision(pagename, newcontent, user, msg, function(page)
 		{
 			res.render('page', { pagename: pagename, page: p, flash: "Page saved successfully!"});
 		});
