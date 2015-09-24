@@ -10,12 +10,16 @@ html#smofte
     div.container
       div.row
         header
-          div.col-sm-3
-              p 
-          div.col-sm-9
+          div.col-md-10.col-md-offset-2
              h1 Smofte.
       div.row
-        aside.col-sm-3.sidebar
+        .col-md-10.col-md-push-2
+          article.content
+            block content
+          footer
+            small Powered by 
+              a(href='https://github.com/NikuNetzwerk/Smofte-Wiki') Smofte Wiki Engine
+        aside.col-md-2.col-md-pull-10.sidebar
           ul
             li
               a(href='/index') Startseite
@@ -23,9 +27,3 @@ html#smofte
               a(href='/todo') To Do Liste
             li
               a(href='/weekly') Protokolle
-        .col-sm-9
-          article.content
-            block content
-          footer
-            small Powered by 
-              a(href='https://github.com/NikuNetzwerk/Smofte-Wiki') Smofte Wiki Engine
