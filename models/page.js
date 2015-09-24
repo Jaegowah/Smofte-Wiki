@@ -58,6 +58,7 @@ var PageManager = function()
 
 				p.version = rev.timestamp;
 				p.user = rev.user;
+				p.msg = rev.msg;
 
 				pm.loadRevision(p, success);
 			}

@@ -56,7 +56,7 @@ router.get('/:page', function(req, res, next) {
 	if (! /^[a-zA-Z0-9-_]+$/.test(pagename)) 
 	{
     	// not a valid pagename
-    	console.log("not a page");
+    	//console.log("not a page");
     	return next();
 	}
 	else

@@ -9,13 +9,15 @@ block content
   +toolbar
   if flash != null
     .alert.alert-success #{flash}
-  p
-    small Version 
-      i !{page.version} 
-      | von 
-      i !{page.user} 
-      |: 
-      i !{page.msg}
+
   p !{page.content}
-  small.categories Kategorien: !{p.categories}
+  p
+   small Version 
+     i !{page.version} 
+     | von 
+     i !{page.user} 
+     |: 
+     i !{page.msg}
+     |. 
+   small.categories Kategorien: !{p.categories}
   +toolbar
